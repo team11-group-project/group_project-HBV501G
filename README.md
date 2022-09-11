@@ -4,3 +4,5 @@ This repository contains our work for the course HBV501G at the University of Ic
 Vigdís Erla Sigmundsdóttir: ves14
 
 Ísak Loftsson: isl5
+
+Óskar Agnarsson: osa16
