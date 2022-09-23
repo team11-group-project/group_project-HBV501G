@@ -1,0 +1,18 @@
+server:
+    error:
+        include-message: always
+        include-binding-errors: always
+spring:
+    datasource:
+        password: 8d62da90a71843da827acaf6d353148a139b17f68844ab521e8b899ae86a0ee0
+        username: chqgivcoqgisqy
+        url: jdbc:postgresql://ec2-54-228-30-162.eu-west-1.compute.amazonaws.com:5432/dem6g18kc1t4vo?user=chqgivcoqgisqy&password=8d62da90a71843da827acaf6d353148a139b17f68844ab521e8b899ae86a0ee0
+        driverClassName: org.postgresql.Driver
+    jpa:
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQL9Dialect
+                format_sql: true
+        show-sql: true
+        generate-ddl: true
+
