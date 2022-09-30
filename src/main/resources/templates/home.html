@@ -15,7 +15,9 @@
   <div sec:authorize="isAuthenticated()">
     Authenticated as <span sec:authentication="name"></span></div>
 
-  <p>Nothing to see...yet</p>
+  <form action="#" th:action="@{/addProject}">
+    <input type="submit" value="Add project"/>
+  </form>
 </section>
 </body>
 </html>

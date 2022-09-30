@@ -47,11 +47,4 @@ public class RegistrationController {
         modelAndView.setViewName("register");
         return modelAndView;
     }
-
-    @RequestMapping(value = {""}, method = RequestMethod.GET)
-    public ModelAndView home(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("home"); // resources/template/home.html
-        return modelAndView;
-    }
 }

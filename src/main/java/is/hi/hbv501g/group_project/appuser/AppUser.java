@@ -73,6 +73,10 @@ public class AppUser implements UserDetails {
         return lastName;
     }
 
+    public Long getId(){
+        return id;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
