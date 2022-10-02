@@ -6,3 +6,5 @@ Vigdís Erla Sigmundsdóttir: ves14
 Ísak Loftsson: isl5
 
 Óskar Agnarsson: osa16
+
+heroku pg:killall --app group-project-hbv501g
