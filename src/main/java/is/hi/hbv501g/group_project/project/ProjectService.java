@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
-    public void addProject(Project project){
-        projectRepository.save(project);
+    public Project addProject(Project project){
+        return projectRepository.save(project);
     }
+
 }

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+//@AllArgsConstructor
 public interface TaskService {
 
     // private final TaskRepository taskRepository;
