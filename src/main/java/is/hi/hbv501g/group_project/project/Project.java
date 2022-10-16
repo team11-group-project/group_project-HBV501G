@@ -49,6 +49,7 @@ public class Project {
         this.description = description;
     }
 
-
-
+    public long getId() {
+        return id;
+    }
 }
