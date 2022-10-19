@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -30,5 +31,9 @@ public class ProjectService {
             projectIdList.add(pm.getProjectId());
         }
         return projectRepository.findByIdIn(projectIdList);
+    }
+
+    public Optional<Project> findByProjectId(long id) {
+        return projectRepository.findById(id);
     }
 }

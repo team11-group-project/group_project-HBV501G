@@ -27,7 +27,7 @@
     </thead>
     <tbody>
       <tr th:each="project : ${projects}">
-        <td><span th:text="${project.name}">Name</span></td>
+        <td><a th:href="@{/{projectId}(projectId=${project.id})}"><span th:text="${project.name}">Name</span></a></td>
       </tr>
     </tbody>
   </table>

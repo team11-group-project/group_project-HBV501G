@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,14 @@ public class ProjectController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         AppUser user = (AppUser) authentication.getPrincipal();
         modelAndView.addObject("projects",projectService.findByUser(user));
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/{projectId}"}, method = RequestMethod.GET)
+    public ModelAndView showProject(@PathVariable("projectId") long id) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("project");
+        modelAndView.addObject("project",projectService.findByProjectId(id).get());
         return modelAndView;
     }
 
