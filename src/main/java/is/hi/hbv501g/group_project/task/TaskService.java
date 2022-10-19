@@ -12,19 +12,11 @@ import org.springframework.stereotype.Service;
 //public interface TaskService {
 public class TaskService {
 
+
     private final TaskRepository taskRepository;
 
-    private final Project project;
-
-    private final TaskService taskService;
-
-    public void saveTask(Task task){
-        taskRepository.save(task);
-    }
-
-
     public void saveTask(TaskServiceRequest request, AppUser user, Project project, Task task) {
-        taskService.saveTask(
+        taskRepository.save(
                 new Task(
                         task.getId(),
                         project.getId(),

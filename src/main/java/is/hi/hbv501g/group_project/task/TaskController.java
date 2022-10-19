@@ -19,8 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class TaskController {
 
     private final TaskService taskService;
-    private final Project project;
-    private final Task task;
 
     @RequestMapping
     public ModelAndView saveTask(){
@@ -31,7 +29,7 @@ public class TaskController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/saveTask", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/saveTask", method = RequestMethod.POST)
     public ModelAndView saveTask(TaskServiceRequest request, BindingResult bindingResult, ModelMap modelMap){
         ModelAndView modelAndView = new ModelAndView();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -58,5 +56,5 @@ public class TaskController {
         modelAndView.addObject("task", new Task());
         modelAndView.setViewName("saveTask");
         return modelAndView;
-    }
+    }*/
 }
