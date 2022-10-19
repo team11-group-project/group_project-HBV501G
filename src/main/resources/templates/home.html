@@ -18,6 +18,19 @@
   <form action="#" th:action="@{/addProject}">
     <input type="submit" value="Add project"/>
   </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="project : ${projects}">
+        <td><span th:text="${project.name}">Name</span></td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 </body>
 </html>
