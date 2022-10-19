@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <title layout:title-pattern="$CONTENT_TITLE">Demo</title>
+  <script>
+    let page = "layout"
+  </script>
+</head>
+<body>
+<header>
+  <h1>Welcome <span sec:authentication="name">Username</span></h1>
+</header>
+<section data-layout-fragment="content">
+
+  <p th:text="${project.description}"></p>
+
+  <form action="#" th:action="@{/addProjectMember}">
+    <input type="submit" value="Add project Member(Button not working)"/>
+  </form>
+
+</section>
+</body>
+</html>
