@@ -30,13 +30,7 @@ public class ProjectController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/{projectId}"}, method = RequestMethod.GET)
-    public ModelAndView showProject(@PathVariable("projectId") long id) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("project");
-        modelAndView.addObject("project",projectService.findByProjectId(id).get());
-        return modelAndView;
-    }
+
 
     @RequestMapping(value = {"/addProject"}, method = RequestMethod.GET)
     public ModelAndView addProject(){
