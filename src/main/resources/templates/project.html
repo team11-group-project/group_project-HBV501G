@@ -14,10 +14,16 @@
 
   <p th:text="${project.description}"></p>
 
-  <form action="#" th:action="@{/addProjectMember}">
-    <input type="submit" value="Add project Member(Button not working)"/>
+  <form action="#" th:action="@{__${#httpServletRequest.requestURI}__/addMemberToProject}">
+    <input type="submit" value="Add project Member"/>
   </form>
 
+
+</section>
+<section data-layout-fragment="content">
+  <form action="#" th:action="@{/}">
+    <input type="submit" value="Go home"/>
+  </form>
 </section>
 </body>
 </html>
