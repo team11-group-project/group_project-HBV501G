@@ -52,6 +52,7 @@ public class ProjectViewController {
         ModelAndView modelAndView = new ModelAndView();
         boolean userExists = appUserRepository.findByEmail(request.getEmail()).isPresent();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        modelAndView.addObject("project", projectService.findByProjectId(projectId).get());
         AppUser user = (AppUser) authentication.getPrincipal();
         if (!userExists) {
             modelAndView.addObject("successMessage", "No user with email: " + request.getEmail());
