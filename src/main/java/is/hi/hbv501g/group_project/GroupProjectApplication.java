@@ -10,6 +10,10 @@ import javax.sql.DataSource;
 @SpringBootApplication
 public class GroupProjectApplication {
 
+    /***
+     * Starts the All-In-One Project Planner.
+     * @param args
+     */
     public static void main(String[] args) {
         SpringApplication.run(GroupProjectApplication.class, args);
     }

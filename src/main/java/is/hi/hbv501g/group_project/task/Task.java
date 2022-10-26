@@ -3,6 +3,9 @@ package is.hi.hbv501g.group_project.task;
 import javax.persistence.*;
 import java.util.Date;
 
+/***
+ * This class implements a task for the projects. The task has an ID, project ID, name, user ID, starting time, deadline, and task status.
+ */
 @Entity
 @Table(name = "tasks")
 public class Task {
@@ -20,6 +23,16 @@ public class Task {
     public Task(){
     }
 
+    /***
+     * This Constructs a task with a specific ID, project ID, name, user ID, start time, deadline, and status of the task.
+     * @param id The ID of the task.
+     * @param projectId The ID of the project.
+     * @param name The name of the task.
+     * @param userId The ID of the user.
+     * @param start The starting time of the task.
+     * @param deadline The deadline for the task
+     * @param status The status for the task.
+     */
     public Task(long id, long projectId, String name, Long userId, Date start, Date deadline, String status) {
         this.id = id;
         this.projectId = projectId;

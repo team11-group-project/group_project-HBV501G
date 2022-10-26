@@ -14,12 +14,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+/***
+ * This class implements a controller for the Projects.
+ */
 @RestController
 @AllArgsConstructor
 public class ProjectController {
 
     private final ProjectService projectService;
 
+    /***
+     * Model and View to display Home
+     * @return Returns the Model and View for Home
+     */
     @RequestMapping(value = {""}, method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
@@ -30,8 +37,10 @@ public class ProjectController {
         return modelAndView;
     }
 
-
-
+    /***
+     * Model and View to display addProject
+     * @return Returns the Model and View for addProject
+     */
     @RequestMapping(value = {"/addProject"}, method = RequestMethod.GET)
     public ModelAndView addProject(){
         ModelAndView modelAndView = new ModelAndView();
@@ -41,6 +50,13 @@ public class ProjectController {
         return modelAndView;
     }
 
+    /***
+     * Adds Project if name and details are not empty. Otherwise, displays error message.
+     * @param request
+     * @param bindingResult
+     * @param modelMap
+     * @return Returns the Model and View for Project and addProject
+     */
     @RequestMapping(value = "/addProject", method = RequestMethod.POST)
     public ModelAndView addProject(AddProjectRequest request, BindingResult bindingResult, ModelMap modelMap){
         ModelAndView modelAndView = new ModelAndView();

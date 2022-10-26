@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+/***
+ * A repository that holds users of the app.
+ */
 @Repository
 @Transactional(readOnly = true)
 public interface AppUserRepository

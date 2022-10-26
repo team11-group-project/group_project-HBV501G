@@ -7,6 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/***
+ * A repository that holds project members for the projects.
+ */
 @Repository
 @Transactional(readOnly = true)
 public interface ProjectMembersRepository

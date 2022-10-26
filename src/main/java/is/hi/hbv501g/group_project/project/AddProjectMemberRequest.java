@@ -5,6 +5,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+/***
+ * This class implements a request to add a member to a project. The request has only an email.
+ */
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode

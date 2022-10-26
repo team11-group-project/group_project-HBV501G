@@ -6,7 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
+/***
+ * A repository that holds projects for the app.
+ */
 @Repository
 @Transactional(readOnly = true)
 public interface ProjectRepository

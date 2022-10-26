@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+/***
+ * This class implements a request to add a project. The request has a name, and description.
+ */
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode
