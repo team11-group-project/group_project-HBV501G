@@ -7,7 +7,9 @@ import lombok.ToString;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 
-
+/***
+ * This class implements a request to add a task to a project. The request has a name, status of task, start time, and deadline.
+ */
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode

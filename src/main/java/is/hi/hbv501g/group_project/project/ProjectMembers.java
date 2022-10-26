@@ -2,6 +2,9 @@ package is.hi.hbv501g.group_project.project;
 
 import javax.persistence.*;
 
+/***
+ * This class defines members of projects.
+ */
 @Entity
 @Table(name = "members")
 public class ProjectMembers {
@@ -16,6 +19,12 @@ public class ProjectMembers {
     public ProjectMembers() {
     }
 
+    /***
+     * This Constructs a project member with a specific project ID, user ID, and authorities.
+     * @param projectId The ID of the project
+     * @param userId The ID of the user
+     * @param authorities All authorities available to that member
+     */
     public ProjectMembers(long projectId, long userId, String authorities) {
         this.projectId = projectId;
         this.userId = userId;

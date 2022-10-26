@@ -5,6 +5,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+/***
+ * This class implements a request to register a new user. The request has a first name, last name, password, and email.
+ */
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode

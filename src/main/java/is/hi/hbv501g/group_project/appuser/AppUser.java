@@ -13,6 +13,9 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 
+/***
+ * This class implements a user for the app. The User has an ID, first name, last name, email, password, and role.
+ */
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -41,6 +44,14 @@ public class AppUser implements UserDetails {
     private Boolean locked = false;
     private Boolean enabled = true;
 
+    /***
+     * This Constructs an app user with a specific first name, last name, email, password, and user role.
+     * @param firstName First name of the user
+     * @param lastName Last name of the user
+     * @param email The user's email which also identifies the user
+     * @param password A password for the user's account
+     * @param appUserRole The user's role which signifies the access available to the user.
+     */
     public AppUser(String firstName, String lastName, String email, String password, AppUserRole appUserRole) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -49,6 +60,10 @@ public class AppUser implements UserDetails {
         this.appUserRole = appUserRole;
     }
 
+    /***
+     * Grants access if the user's role is deemed correct.
+     * @return
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(appUserRole.name());

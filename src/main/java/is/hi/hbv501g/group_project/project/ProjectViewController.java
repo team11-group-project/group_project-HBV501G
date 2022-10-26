@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+/***
+ * This class implements a controller for the project view and holds the Model and View.
+ */
 @RestController
 @AllArgsConstructor
 public class ProjectViewController {
@@ -29,6 +32,11 @@ public class ProjectViewController {
     private final ProjectMembersService projectMembersService;
     private final AppUserService appUserService;
 
+    /***
+     * Model and View to display projects by ID.
+     * @param id The ID of the project.
+     * @return
+     */
     @RequestMapping(value = {"/{projectId}"}, method = RequestMethod.GET)
     public ModelAndView showProject(@PathVariable("projectId") long id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -37,6 +45,11 @@ public class ProjectViewController {
         return modelAndView;
     }
 
+    /***
+     * Model and View to be able to add members to projects.
+     * @param id The ID of the project.
+     * @return
+     */
     @RequestMapping(value = {"/{projectId}/addMemberToProject"}, method = RequestMethod.GET)
     public ModelAndView addMemberToProject(@PathVariable("projectId") long id){
         ModelAndView modelAndView = new ModelAndView();
@@ -47,6 +60,14 @@ public class ProjectViewController {
         return modelAndView;
     }
 
+    /***
+     * Adds a member to project if email is valid and member does not already have access to the project. Otherwise displays error message.
+     * @param projectId The ID of the project.
+     * @param request Email of the member that is to be added to the project.
+     * @param bindingResult Details
+     * @param modelMap
+     * @return
+     */
     @RequestMapping(value = {"/{projectId}/addMemberToProject"}, method = RequestMethod.POST)
     public ModelAndView addMemberToProject(@PathVariable("projectId") long projectId, AddProjectMemberRequest request, BindingResult bindingResult, ModelMap modelMap){
         ModelAndView modelAndView = new ModelAndView();

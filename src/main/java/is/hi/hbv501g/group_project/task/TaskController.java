@@ -14,12 +14,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+/***
+ * This class implements a controller for the tasks.
+ */
 @RestController
 @AllArgsConstructor
 public class TaskController {
 
     private final TaskService taskService;
 
+    /***
+     * Model and View to display saveTask
+     * @return
+     */
     @RequestMapping
     public ModelAndView saveTask(){
         ModelAndView modelAndView = new ModelAndView();

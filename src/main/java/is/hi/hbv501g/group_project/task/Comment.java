@@ -2,6 +2,9 @@ package is.hi.hbv501g.group_project.task;
 
 import javax.persistence.*;
 
+/***
+ * This class implements a comment for the tasks. The comment has an ID, Task ID, and some text.
+ */
 @Entity
 @Table(name = "comment")
 public class Comment {
@@ -15,6 +18,12 @@ public class Comment {
     public Comment(){
     }
 
+    /***
+     * This Constructs a comment with a specific ID, task ID, and comment text.
+     * @param id
+     * @param taskId
+     * @param text
+     */
     public Comment(long id, long taskId, String text) {
         this.id = id;
         this.taskId = taskId;
