@@ -15,7 +15,7 @@ public class Task {
     private long id;
     private long projectId;
     private String name;
-    private Long userId;
+    private Long ownerUserId;
     private Date start;
     private Date deadline;
     private String status;
@@ -28,16 +28,15 @@ public class Task {
      * @param id The ID of the task.
      * @param projectId The ID of the project.
      * @param name The name of the task.
-     * @param userId The ID of the user.
+     * @param ownerUserId The ID of the user.
      * @param start The starting time of the task.
      * @param deadline The deadline for the task
      * @param status The status for the task.
      */
-    public Task(long id, long projectId, String name, Long userId, Date start, Date deadline, String status) {
-        this.id = id;
+    public Task(long projectId, String name, Long ownerUserId, Date start, Date deadline, String status) {
         this.projectId = projectId;
         this.name = name;
-        this.userId = userId;
+        this.ownerUserId = ownerUserId;
         this.start = start;
         this.deadline = deadline;
         this.status = status;
@@ -67,12 +66,12 @@ public class Task {
         this.name = name;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getOwnerUserId() {
+        return ownerUserId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setOwnerUserId(Long userId) {
+        this.ownerUserId = userId;
     }
 
     public Date getStart() {

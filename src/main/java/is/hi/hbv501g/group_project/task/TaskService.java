@@ -1,11 +1,12 @@
 package is.hi.hbv501g.group_project.task;
 
 
-import is.hi.hbv501g.group_project.appuser.AppUser;
-import is.hi.hbv501g.group_project.project.AddProjectRequest;
-import is.hi.hbv501g.group_project.project.Project;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.util.Date;
 
 /***
  * This class implements a service for the tasks. The service adds tasks to the repository of tasks.
@@ -20,21 +21,17 @@ public class TaskService {
 
     /***
      * Adds a new task to the project.
-     * @param request The name, starting time, deadline, and status of the task.
-     * @param user The ID of the user.
-     * @param project The ID of the project.
-     * @param task The ID of the task.
+     * @param request The name, deadline, and owner of the task.
+     * @param projectId The ID of the project.
      */
-    public void saveTask(TaskServiceRequest request, AppUser user, Project project, Task task) {
+    public void saveTask(AddTaskRequest request, Long projectId) {
         taskRepository.save(
-                new Task(
-                        task.getId(),
-                        project.getId(),
+                new Task(projectId,
                         request.getName(),
-                        user.getId(),
-                        request.getStart(),
-                        request.getDeadline(),
-                        request.getStatus())
+                        request.getOwnerUserId(),
+                        new Date(),
+                        Date.from(LocalDate.parse(request.getDeadline()).atStartOfDay().toInstant(ZoneOffset.UTC)),
+                        "In progress")
         );
     }
 

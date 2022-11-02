@@ -61,7 +61,8 @@ public class ProjectViewController {
     }
 
     /***
-     * Adds a member to project if email is valid and member does not already have access to the project. Otherwise displays error message.
+     * Adds a member to project if email is valid and member does not already have access to the project. Otherwise,
+     * displays error message.
      * @param projectId The ID of the project.
      * @param request Email of the member that is to be added to the project.
      * @param bindingResult Details
