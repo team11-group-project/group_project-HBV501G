@@ -1,14 +1,10 @@
 package is.hi.hbv501g.group_project.task;
 
-import is.hi.hbv501g.group_project.project.ProjectService;
-import is.hi.hbv501g.group_project.project.AddProjectRequest;
-import is.hi.hbv501g.group_project.appuser.AppUser;
-import is.hi.hbv501g.group_project.project.Project;
+import is.hi.hbv501g.group_project.project.*;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,46 +18,45 @@ import org.springframework.web.servlet.ModelAndView;
 public class TaskController {
 
     private final TaskService taskService;
+    private final ProjectMembersService projectMembersService;
+    private final ProjectService projectService;
 
     /***
      * Model and View to display saveTask
      * @return
      */
-    @RequestMapping
-    public ModelAndView saveTask(){
+    @RequestMapping(value = {"/{projectId}/addTask"}, method = RequestMethod.GET)
+    public ModelAndView addMemberToProject(@PathVariable("projectId") long id){
         ModelAndView modelAndView = new ModelAndView();
         Task task = new Task();
         modelAndView.addObject("task", task);
-        modelAndView.setViewName("saveTask"); // resources/template/register.html
+        modelAndView.addObject("users", projectMembersService.findMembersByProjectId(id));
+        modelAndView.addObject("project", projectService.findByProjectId(id).get());
+        modelAndView.setViewName("addTask"); // resources/template/register.html
         return modelAndView;
     }
 
-    /*@RequestMapping(value = "/saveTask", method = RequestMethod.POST)
-    public ModelAndView saveTask(TaskServiceRequest request, BindingResult bindingResult, ModelMap modelMap){
+    @RequestMapping(value = {"/{projectId}/addTask"}, method = RequestMethod.POST)
+    public ModelAndView addMemberToProject(@PathVariable("projectId") long projectId, AddTaskRequest request, BindingResult bindingResult, ModelMap modelMap){
         ModelAndView modelAndView = new ModelAndView();
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        AppUser user = (AppUser) authentication.getPrincipal();
-        if(request.getName().isEmpty()){
-            modelAndView.addObject("successMessage", "Please specify name of given task!");
-        }
-        if(request.getStatus().isEmpty()){
-            modelAndView.addObject("successMessage", "Please specify status of given task!");
-        }
-        if(request.getStart().equals(0) || request.getStart().equals("")){
-            modelAndView.addObject("successMessage", "Please add task start time!");
-        }
-        if(request.getDeadline().equals(0) || request.getDeadline().equals("")){
-            modelAndView.addObject("successMessage", "Please add task deadline!");
+        modelAndView.addObject("project", projectService.findByProjectId(projectId).get());
+        if (request.getName().equals("")) {
+            modelAndView.addObject("successMessage", "Task must have a name!");
         }
         else if(bindingResult.hasErrors()){
             modelAndView.addObject("successMessage", "Please add correct details!");
             modelMap.addAttribute("bindingResult", bindingResult);
-        }else {
-            taskService.saveTask(request, user, project, task);
-            modelAndView.addObject("successMessage", "Task added!");
+        }
+        else {
+            taskService.saveTask(
+                    request,
+                    projectId
+            );
+            modelAndView.addObject("successMessage", "Task created!");
         }
         modelAndView.addObject("task", new Task());
-        modelAndView.setViewName("saveTask");
+        modelAndView.addObject("users", projectMembersService.findMembersByProjectId(projectId));
+        modelAndView.setViewName("addTask");
         return modelAndView;
-    }*/
+    }
 }
