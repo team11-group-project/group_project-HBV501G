@@ -50,4 +50,13 @@ public class AppUserService implements UserDetailsService {
 
         appUserRepository.save(appUser);
     }
+
+    /**
+     *
+     * @param id of the appUser
+     * @return appUser
+     */
+    public AppUser findById(long id){
+        return appUserRepository.findById(id).get();
+    }
 }

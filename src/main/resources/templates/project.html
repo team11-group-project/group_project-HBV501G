@@ -11,6 +11,19 @@
   <p th:text="${project.name}"></p>
   <p th:text="${project.description}"></p>
 
+  <table>
+    <thead>
+    <tr>
+      <th>Tasks</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+      <td><a th:href="@{__${#httpServletRequest.requestURI}__/{taskId}(taskId=${task.id})}"><span th:text="${task.name}">Name</span></a></td>
+    </tr>
+    </tbody>
+  </table>
+
   <form action="#" th:action="@{__${#httpServletRequest.requestURI}__/addMemberToProject}">
     <input type="submit" value="Add project Member"/>
   </form>
@@ -18,8 +31,6 @@
   <form action="#" th:action="@{__${#httpServletRequest.requestURI}__/addTask}">
     <input type="submit" value="Add task"/>
   </form>
-
-
 </section>
 <section data-layout-fragment="content">
   <form action="#" th:action="@{/}">
