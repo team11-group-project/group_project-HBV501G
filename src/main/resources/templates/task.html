@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <title layout:title-pattern="$CONTENT_TITLE">Demo</title>
+  <script>
+    let page = "layout"
+  </script>
+</head>
+<body>
+<section data-layout-fragment="content">
+  <p th:text="${task.name}"></p>
+  <p th:text="'Assigned to: ' + ${assigned.firstName} + ' ' + ${assigned.lastName}"></p>
+  <p th:text="'Deadline: ' + ${deadline}"></p>
+  <p th:text="'Status: ' + ${task.status}"></p>
+
+  <section data-layout-fragment="content">
+    <div th:object="${project}" >
+      <form action="#" th:action="@{/{projectId}(projectId=${project.id})}">
+        <input type="submit" value="Go back"/>
+      </form>
+    </div>
+  </section>
+<section data-layout-fragment="content">
+  <form action="#" th:action="@{/}">
+    <input type="submit" value="Go home"/>
+  </form>
+</section>
+</body>
+</html>

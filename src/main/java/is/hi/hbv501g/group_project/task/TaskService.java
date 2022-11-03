@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.Date;
+import java.util.List;
 
 /***
  * This class implements a service for the tasks. The service adds tasks to the repository of tasks.
@@ -35,4 +36,21 @@ public class TaskService {
         );
     }
 
+    /**
+     *
+     * @param id the project id
+     * @return a list of all tasks belonging to the project
+     */
+    public List<Task> findByProjectId(Long id){
+        return taskRepository.findByProjectId(id);
+    }
+
+    /**
+     *
+     * @param id the task id
+     * @return the task with the id
+     */
+    public Task findByTaskId(long id){
+        return taskRepository.findById(id).get();
+    }
 }

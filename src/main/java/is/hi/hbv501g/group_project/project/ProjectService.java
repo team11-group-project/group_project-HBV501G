@@ -51,7 +51,7 @@ public class ProjectService {
      * @param id The ID of the project
      * @return A list of all projects
      */
-    public Optional<Project> findByProjectId(long id) {
-        return projectRepository.findById(id);
+    public Project findByProjectId(long id) {
+        return projectRepository.findById(id).get();
     }
 }

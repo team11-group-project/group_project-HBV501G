@@ -5,6 +5,7 @@ import is.hi.hbv501g.group_project.appuser.AppUserEmail;
 import is.hi.hbv501g.group_project.appuser.AppUserRepository;
 import is.hi.hbv501g.group_project.appuser.AppUserService;
 import is.hi.hbv501g.group_project.registration.RegistrationRequest;
+import is.hi.hbv501g.group_project.task.TaskService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class ProjectViewController {
     private final ProjectService projectService;
     private final AppUserRepository appUserRepository;
     private final ProjectMembersService projectMembersService;
-    private final AppUserService appUserService;
+    private final TaskService taskService;
 
     /***
      * Model and View to display projects by ID.
@@ -41,7 +42,8 @@ public class ProjectViewController {
     public ModelAndView showProject(@PathVariable("projectId") long id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("project");
-        modelAndView.addObject("project", projectService.findByProjectId(id).get());
+        modelAndView.addObject("project", projectService.findByProjectId(id));
+        modelAndView.addObject("tasks", taskService.findByProjectId(id));
         return modelAndView;
     }
 
@@ -55,7 +57,7 @@ public class ProjectViewController {
         ModelAndView modelAndView = new ModelAndView();
         AppUserEmail email = new AppUserEmail();
         modelAndView.addObject("email", email);
-        modelAndView.addObject("project", projectService.findByProjectId(id).get());
+        modelAndView.addObject("project", projectService.findByProjectId(id));
         modelAndView.setViewName("addMemberToProject"); // resources/template/register.html
         return modelAndView;
     }
@@ -74,7 +76,7 @@ public class ProjectViewController {
         ModelAndView modelAndView = new ModelAndView();
         boolean userExists = appUserRepository.findByEmail(request.getEmail()).isPresent();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        modelAndView.addObject("project", projectService.findByProjectId(projectId).get());
+        modelAndView.addObject("project", projectService.findByProjectId(projectId));
         AppUser user = (AppUser) authentication.getPrincipal();
         if (!userExists) {
             modelAndView.addObject("successMessage", "No user with email: " + request.getEmail());
