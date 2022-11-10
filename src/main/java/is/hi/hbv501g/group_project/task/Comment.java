@@ -13,6 +13,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private long taskId;
+    private String userName;
     private String text;
 
     public Comment(){
@@ -22,11 +23,13 @@ public class Comment {
      * This Constructs a comment with a specific ID, task ID, and comment text.
      * @param id
      * @param taskId
+     * @param user
      * @param text
      */
-    public Comment(long id, long taskId, String text) {
+    public Comment(long id, long taskId, String user, String text) {
         this.id = id;
         this.taskId = taskId;
+        this.userName = user;
         this.text = text;
     }
 
@@ -46,6 +49,13 @@ public class Comment {
         this.taskId = taskId;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String user) {
+        this.userName = user;
+    }
     public String getText() {
         return text;
     }

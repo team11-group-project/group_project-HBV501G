@@ -4,12 +4,11 @@ import is.hi.hbv501g.group_project.appuser.AppUser;
 import is.hi.hbv501g.group_project.appuser.AppUserService;
 import is.hi.hbv501g.group_project.project.*;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.DateFormat;
@@ -44,8 +43,22 @@ public class TaskController {
         AppUser assigned = appUserService.findById(task.getOwnerUserId());
         modelAndView.addObject("assigned", assigned);
         modelAndView.addObject("project", projectService.findByProjectId(projectId));
+        modelAndView.addObject("comments", taskService.findCommentByTaskId(taskId));
+        modelAndView.addObject("comment", new Comment());
         modelAndView.setViewName("task");
         return modelAndView;
+    }
+
+    @RequestMapping(value = {"/{projectId}/{taskId}/addComment"}, method = RequestMethod.POST)
+    public ModelAndView addComment(@PathVariable("projectId") long projectId, @PathVariable("taskId") long taskId, @ModelAttribute("comment") Comment comment) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        AppUser user = (AppUser) authentication.getPrincipal();
+        comment.setUserName(user.getFirstName());
+        comment.setTaskId(taskId);
+        taskService.saveComment(comment);
+        String redirUrl = "/"+projectId+"/"+taskId;
+        System.out.println(redirUrl);
+        return new ModelAndView("redirect:"+redirUrl);
     }
 
     /**
