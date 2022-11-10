@@ -19,6 +19,7 @@ public class TaskService {
 
 
     private final TaskRepository taskRepository;
+    private final CommentRepository commentRepository;
 
     /***
      * Adds a new task to the project.
@@ -52,5 +53,18 @@ public class TaskService {
      */
     public Task findByTaskId(long id){
         return taskRepository.findById(id).get();
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public List<Comment> findCommentByTaskId(long id) {
+        return commentRepository.findByTaskId(id);
+    }
+
+    public void saveComment(Comment comment) {
+        commentRepository.save(comment);
     }
 }
