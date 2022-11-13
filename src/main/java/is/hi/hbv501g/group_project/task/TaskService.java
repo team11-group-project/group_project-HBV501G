@@ -33,8 +33,11 @@ public class TaskService {
                         request.getOwnerUserId(),
                         new Date(),
                         Date.from(LocalDate.parse(request.getDeadline()).atStartOfDay().toInstant(ZoneOffset.UTC)),
-                        "In progress")
+                        request.getStatus())
         );
+    }
+    public void editTask(Task newTask) {
+        taskRepository.save(newTask);
     }
 
     /**

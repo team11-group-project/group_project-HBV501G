@@ -12,16 +12,14 @@
   <p th:text="'Assigned to: ' + ${assigned.firstName} + ' ' + ${assigned.lastName}"></p>
   <p th:text="'Deadline: ' + ${deadline}"></p>
   <p th:text="'Status: ' + ${task.status}"></p>
-  <div th:object="${project}" >
-    <form action="#" th:action="@{/{projectId}(projectId=${project.id})}">
-      <input type="submit" value="Go back"/>
-    </form>
-  </div>
-  <div>
-    <form action="#" th:action="@{/}">
-      <input type="submit" value="Go home"/>
-    </form>
-  </div>
+  <form action="#" th:action="@{__${#httpServletRequest.requestURI}__/editDescription}" th:object="${comment}" method="post">
+    <input type="text" th:field="*{text}" placeholder="Description" class="form-control" />
+    <button type="submit" class="btn btn-primary btn-block">Change Description</button>
+  </form>
+  <form action="#" th:action="@{__${#httpServletRequest.requestURI}__/editStatus}" th:object="${comment}" method="post">
+    <input type="text" th:field="*{text}" placeholder="New Status" class="form-control" />
+    <button type="submit" class="btn btn-primary btn-block">Change Status</button>
+  </form>
   <table>
     <thead>
       <tr>
@@ -42,6 +40,16 @@
     <input type="text" th:field="*{text}" placeholder="Comment" class="form-control" />
     <button type="submit" class="btn btn-primary btn-block">Submit</button>
   </form>
-</section>
-</body>
-</html>
+  <div th:object="${project}" >
+    <form action="#" th:action="@{/{projectId}(projectId=${project.id})}">
+      <input type="submit" value="Go back"/>
+    </form>
+  </div>
+  <div>
+    <form action="#" th:action="@{/}">
+      <input type="submit" value="Go home"/>
+    </form>
+  </div>
+  </section>
+  </body>
+  </html>
