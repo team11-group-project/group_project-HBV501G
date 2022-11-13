@@ -16,4 +16,5 @@ public class AddTaskRequest {
     private final String name;
     private final String deadline;
     private final Long ownerUserId;
+    private final String status;
 }

@@ -61,6 +61,26 @@ public class TaskController {
         return new ModelAndView("redirect:"+redirUrl);
     }
 
+    @RequestMapping(value = {"/{projectId}/{taskId}/editStatus"}, method = RequestMethod.POST)
+    public ModelAndView editStatus(@PathVariable("projectId") long projectId, @PathVariable("taskId") long taskId, @ModelAttribute("comment") Comment comment) {
+        Task task = taskService.findByTaskId(taskId);
+        task.setStatus(comment.getText());
+        taskService.editTask(task);
+        String redirUrl = "/"+projectId+"/"+taskId;
+        System.out.println(redirUrl);
+        return new ModelAndView("redirect:"+redirUrl);
+    }
+
+    @RequestMapping(value = {"/{projectId}/{taskId}/editDescription"}, method = RequestMethod.POST)
+    public ModelAndView editTask(@PathVariable("projectId") long projectId, @PathVariable("taskId") long taskId, @ModelAttribute("comment") Comment comment) {
+        Task task = taskService.findByTaskId(taskId);
+        task.setName(comment.getText());
+        taskService.editTask(task);
+        String redirUrl = "/"+projectId+"/"+taskId;
+        System.out.println(redirUrl);
+        return new ModelAndView("redirect:"+redirUrl);
+    }
+
     /**
      * Model and view to display the add task form
      * @param projectId the id of the project we wish to add a task to
