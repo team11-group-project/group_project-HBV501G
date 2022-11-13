@@ -27,13 +27,19 @@ public class ProjectController {
      * Model and View to display Home
      * @return Returns the Model and View for Home
      */
-    @RequestMapping(value = {""}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("home"); // resources/template/home.html
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        AppUser user = (AppUser) authentication.getPrincipal();
-        modelAndView.addObject("projects",projectService.findByUser(user));
+
+        if (authentication.getPrincipal() instanceof String){
+            modelAndView.setViewName("notLoggedIn");
+        }
+        else {
+            AppUser user = (AppUser) authentication.getPrincipal();
+            modelAndView.setViewName("home"); // resources/template/home.html
+            modelAndView.addObject("projects", projectService.findByUser(user));
+        }
         return modelAndView;
     }
 

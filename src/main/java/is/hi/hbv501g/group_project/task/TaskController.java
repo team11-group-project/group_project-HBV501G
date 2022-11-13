@@ -3,6 +3,7 @@ package is.hi.hbv501g.group_project.task;
 import is.hi.hbv501g.group_project.appuser.AppUser;
 import is.hi.hbv501g.group_project.appuser.AppUserService;
 import is.hi.hbv501g.group_project.project.*;
+import is.hi.hbv501g.group_project.security.config.CustomPermissionEvaluatorService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +28,7 @@ public class TaskController {
     private final AppUserService appUserService;
     private final String pattern = "MM/dd/yyyy";
     private final DateFormat df = new SimpleDateFormat(pattern);
+    private final CustomPermissionEvaluatorService customPermissionEvaluatorService;
 
     /**
      * Model and view to display task by id
@@ -37,15 +39,20 @@ public class TaskController {
     @RequestMapping(value = {"/{projectId}/{taskId}"}, method = RequestMethod.GET)
     public ModelAndView showTask(@PathVariable("projectId") long projectId, @PathVariable long taskId) {
         ModelAndView modelAndView = new ModelAndView();
-        Task task = taskService.findByTaskId(taskId);
-        modelAndView.addObject("task", task);
-        modelAndView.addObject("deadline", df.format(task.getDeadline()));
-        AppUser assigned = appUserService.findById(task.getOwnerUserId());
-        modelAndView.addObject("assigned", assigned);
-        modelAndView.addObject("project", projectService.findByProjectId(projectId));
-        modelAndView.addObject("comments", taskService.findCommentByTaskId(taskId));
-        modelAndView.addObject("comment", new Comment());
-        modelAndView.setViewName("task");
+        if (!customPermissionEvaluatorService.hasPermission(SecurityContextHolder.getContext().getAuthentication(), projectId)){
+            modelAndView.setViewName("notAuthorized");
+        }
+        else {
+            Task task = taskService.findByTaskId(taskId);
+            modelAndView.addObject("task", task);
+            modelAndView.addObject("deadline", df.format(task.getDeadline()));
+            AppUser assigned = appUserService.findById(task.getOwnerUserId());
+            modelAndView.addObject("assigned", assigned);
+            modelAndView.addObject("project", projectService.findByProjectId(projectId));
+            modelAndView.addObject("comments", taskService.findCommentByTaskId(taskId));
+            modelAndView.addObject("comment", new Comment());
+            modelAndView.setViewName("task");
+        }
         return modelAndView;
     }
 
@@ -89,11 +96,16 @@ public class TaskController {
     @RequestMapping(value = {"/{projectId}/addTask"}, method = RequestMethod.GET)
     public ModelAndView addTask(@PathVariable("projectId") long projectId){
         ModelAndView modelAndView = new ModelAndView();
-        Task task = new Task();
-        modelAndView.addObject("task", task);
-        modelAndView.addObject("users", projectMembersService.findMembersByProjectId(projectId));
-        modelAndView.addObject("project", projectService.findByProjectId(projectId));
-        modelAndView.setViewName("addTask"); // resources/template/register.html
+        if (!customPermissionEvaluatorService.hasPermission(SecurityContextHolder.getContext().getAuthentication(), projectId)){
+            modelAndView.setViewName("notAuthorized");
+        }
+        else {
+            Task task = new Task();
+            modelAndView.addObject("task", task);
+            modelAndView.addObject("users", projectMembersService.findMembersByProjectId(projectId));
+            modelAndView.addObject("project", projectService.findByProjectId(projectId));
+            modelAndView.setViewName("addTask"); // resources/template/register.html
+        }
         return modelAndView;
     }
 
