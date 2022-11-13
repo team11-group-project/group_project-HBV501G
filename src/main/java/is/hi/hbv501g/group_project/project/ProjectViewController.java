@@ -3,12 +3,9 @@ package is.hi.hbv501g.group_project.project;
 import is.hi.hbv501g.group_project.appuser.AppUser;
 import is.hi.hbv501g.group_project.appuser.AppUserEmail;
 import is.hi.hbv501g.group_project.appuser.AppUserRepository;
-import is.hi.hbv501g.group_project.appuser.AppUserService;
-import is.hi.hbv501g.group_project.registration.RegistrationRequest;
+import is.hi.hbv501g.group_project.security.config.CustomPermissionEvaluatorService;
 import is.hi.hbv501g.group_project.task.TaskService;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ModelMap;
@@ -32,6 +29,7 @@ public class ProjectViewController {
     private final AppUserRepository appUserRepository;
     private final ProjectMembersService projectMembersService;
     private final TaskService taskService;
+    private final CustomPermissionEvaluatorService customPermissionEvaluatorService;
 
     /***
      * Model and View to display projects by ID.
@@ -41,9 +39,15 @@ public class ProjectViewController {
     @RequestMapping(value = {"/{projectId}"}, method = RequestMethod.GET)
     public ModelAndView showProject(@PathVariable("projectId") long id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("project");
-        modelAndView.addObject("project", projectService.findByProjectId(id));
-        modelAndView.addObject("tasks", taskService.findByProjectId(id));
+        if (!customPermissionEvaluatorService.hasPermission(SecurityContextHolder.getContext().getAuthentication(), id)){
+            modelAndView.setViewName("notAuthorized");
+        }
+        else {
+
+            modelAndView.setViewName("project");
+            modelAndView.addObject("project", projectService.findByProjectId(id));
+            modelAndView.addObject("tasks", taskService.findByProjectId(id));
+        }
         return modelAndView;
     }
 
@@ -55,10 +59,15 @@ public class ProjectViewController {
     @RequestMapping(value = {"/{projectId}/addMemberToProject"}, method = RequestMethod.GET)
     public ModelAndView addMemberToProject(@PathVariable("projectId") long id){
         ModelAndView modelAndView = new ModelAndView();
-        AppUserEmail email = new AppUserEmail();
-        modelAndView.addObject("email", email);
-        modelAndView.addObject("project", projectService.findByProjectId(id));
-        modelAndView.setViewName("addMemberToProject"); // resources/template/register.html
+        if (!customPermissionEvaluatorService.hasPermission(SecurityContextHolder.getContext().getAuthentication(), id)){
+            modelAndView.setViewName("notAuthorized");
+        }
+        else {
+            AppUserEmail email = new AppUserEmail();
+            modelAndView.addObject("email", email);
+            modelAndView.addObject("project", projectService.findByProjectId(id));
+            modelAndView.setViewName("addMemberToProject"); // resources/template/register.html
+        }
         return modelAndView;
     }
 
