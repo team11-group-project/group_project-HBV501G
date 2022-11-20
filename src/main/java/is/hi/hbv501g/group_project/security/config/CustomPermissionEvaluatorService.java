@@ -14,11 +14,9 @@ public class CustomPermissionEvaluatorService {
 
     private final ProjectMembersService projectMembersService;
 
-
     public boolean hasPermission(Authentication authentication, Long projectId) {
         List<AppUser> members = projectMembersService.findMembersByProjectId(projectId);
         AppUser user = (AppUser) authentication.getPrincipal();
         return members.contains(user);
     }
-
 }

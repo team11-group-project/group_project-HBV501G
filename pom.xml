@@ -14,7 +14,7 @@
     <name>group_project</name>
     <description>group_project</description>
     <properties>
-        <java.version>18</java.version>
+        <java.version>11</java.version>
     </properties>
     <dependencies>
         <dependency>
