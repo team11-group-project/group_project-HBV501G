@@ -13,7 +13,7 @@ public class DatabaseConfig {
     private String dbUrl;
 
     @Bean
-    @ConfigurationProperties("spring.datasource")
+    @ConfigurationProperties("spring.datasource.type")
     public DataSource dataSource() {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(dbUrl);
