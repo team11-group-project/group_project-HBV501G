@@ -6,7 +6,7 @@ spring:
     datasource:
         password: 8d62da90a71843da827acaf6d353148a139b17f68844ab521e8b899ae86a0ee0
         username: chqgivcoqgisqy
-        url: jdbc:postgresql://ec2-54-228-30-162.eu-west-1.compute.amazonaws.com:5432/dem6g18kc1t4vo?user=chqgivcoqgisqy&password=8d62da90a71843da827acaf6d353148a139b17f68844ab521e8b899ae86a0ee0
+        url: postgres://chqgivcoqgisqy:8d62da90a71843da827acaf6d353148a139b17f68844ab521e8b899ae86a0ee0@ec2-54-228-30-162.eu-west-1.compute.amazonaws.com:5432/dem6g18kc1t4vo
         driver-class-name: org.postgresql.Driver
         type: org.apache.tomcat.jdbc.pool.DataSource
     jpa:
