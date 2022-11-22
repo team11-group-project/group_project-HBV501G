@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-  <title layout:title-pattern="$CONTENT_TITLE">Demo</title>
+  <title layout:title-pattern="$CONTENT_TITLE">Project</title>
   <script>
     let page = "layout"
   </script>
 </head>
 <body>
+<header th:object="${project}">
+  <h1><span th:text="${project.name}" >Username</span></h1>
+</header>
 <section data-layout-fragment="content">
-  <p th:text="${project.name}"></p>
-  <p th:text="${project.description}"></p>
-
+  <p th:text="'Project description: ' + ${project.description}"></p>
   <table>
     <thead>
     <tr>
-      <th>Tasks</th>
+      <div th:if="${!tasks.isEmpty()}">
+        <th>Tasks</th>
+      </div>
+      <div th:if="${tasks.isEmpty()}">
+        <p th:text="'The tasks you add will appear here'"></p>
+      </div>
     </tr>
     </thead>
     <tbody>
+
     <tr th:each="task : ${tasks}">
       <td><a th:href="@{__${#httpServletRequest.requestURI}__/{taskId}(taskId=${task.id})}"><span th:text="${task.name}">Name</span></a></td>
     </tr>
     </tbody>
   </table>
-
-  <form action="#" th:action="@{__${#httpServletRequest.requestURI}__/addMemberToProject}">
-    <input type="submit" value="Add project Member"/>
-  </form>
-
   <form action="#" th:action="@{__${#httpServletRequest.requestURI}__/addTask}">
     <input type="submit" value="Add task"/>
+  </form>
+  <form action="#" th:action="@{__${#httpServletRequest.requestURI}__/addMemberToProject}">
+    <input type="submit" value="Add project Member"/>
   </form>
 </section>
 <section data-layout-fragment="content">

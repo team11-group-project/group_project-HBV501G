@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 /***
  * This class implements a controller for the project view and holds the Model and View.
  */
@@ -87,7 +89,11 @@ public class ProjectViewController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         modelAndView.addObject("project", projectService.findByProjectId(projectId));
         AppUser user = (AppUser) authentication.getPrincipal();
-        if (!userExists) {
+        List <AppUser> users = projectMembersService.findMembersByProjectId(projectId);
+        if(request.getEmail().equals("")){
+            modelAndView.addObject("successMessage", "Please enter the email of the user you wish to add" + request.getEmail());
+        }
+        else if (!userExists) {
             modelAndView.addObject("successMessage", "No user with email: " + request.getEmail());
         }
         else if(request.getEmail() == user.getEmail()){
