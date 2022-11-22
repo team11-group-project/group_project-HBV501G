@@ -38,6 +38,7 @@ public class ProjectController {
         else {
             AppUser user = (AppUser) authentication.getPrincipal();
             modelAndView.setViewName("home"); // resources/template/home.html
+            modelAndView.addObject("user", user);
             modelAndView.addObject("projects", projectService.findByUser(user));
         }
         return modelAndView;

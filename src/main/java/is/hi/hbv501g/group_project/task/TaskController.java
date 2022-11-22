@@ -46,8 +46,14 @@ public class TaskController {
             Task task = taskService.findByTaskId(taskId);
             modelAndView.addObject("task", task);
             modelAndView.addObject("deadline", df.format(task.getDeadline()));
-            AppUser assigned = appUserService.findById(task.getOwnerUserId());
-            modelAndView.addObject("assigned", assigned);
+            System.out.println(task.getOwnerUserId());
+            if (task.getOwnerUserId() == null){
+                modelAndView.addObject("claimable", true);
+            }
+            else {
+                AppUser assigned = appUserService.findById(task.getOwnerUserId());
+                modelAndView.addObject("assigned", assigned);
+            }
             modelAndView.addObject("project", projectService.findByProjectId(projectId));
             modelAndView.addObject("comments", taskService.findCommentByTaskId(taskId));
             modelAndView.addObject("comment", new Comment());
@@ -118,11 +124,17 @@ public class TaskController {
      * @return
      */
     @RequestMapping(value = {"/{projectId}/addTask"}, method = RequestMethod.POST)
-    public ModelAndView addMemberTask(@PathVariable("projectId") long projectId, AddTaskRequest request, BindingResult bindingResult, ModelMap modelMap){
+    public ModelAndView addTask(@PathVariable("projectId") long projectId, AddTaskRequest request, BindingResult bindingResult, ModelMap modelMap){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("project", projectService.findByProjectId(projectId));
         if (request.getName().equals("")) {
             modelAndView.addObject("successMessage", "Task must have a name!");
+        }
+        else if (request.getStatus().equals("")) {
+            modelAndView.addObject("successMessage", "Please indicate a status for your task");
+        }
+        else if (request.getDeadline().isEmpty()){
+            modelAndView.addObject("successMessage", "Please enter a deadline");
         }
         else if(bindingResult.hasErrors()){
             modelAndView.addObject("successMessage", "Please add correct details!");
@@ -139,5 +151,15 @@ public class TaskController {
         modelAndView.addObject("users", projectMembersService.findMembersByProjectId(projectId));
         modelAndView.setViewName("addTask");
         return modelAndView;
+    }
+
+    @RequestMapping(value = {"/{projectId}/{taskId}/claimTask"}, method = RequestMethod.POST)
+    public ModelAndView claimTask(@PathVariable("projectId") long projectId, @PathVariable("taskId") long taskId) {
+        Task task = taskService.findByTaskId(taskId);
+        AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        task.setOwnerUserId(user.getId());
+        taskService.editTask(task);
+        String redirUrl = "/"+projectId+"/"+taskId;
+        return new ModelAndView("redirect:"+redirUrl);
     }
 }

@@ -1,36 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-  <title layout:title-pattern="$CONTENT_TITLE">Demo</title>
+  <title layout:title-pattern="$CONTENT_TITLE">Task</title>
   <script>
     let page = "layout"
   </script>
 </head>
 <body>
 <section data-layout-fragment="content">
-  <p th:text="${task.name}"></p>
-  <p th:text="'Assigned to: ' + ${assigned.firstName} + ' ' + ${assigned.lastName}"></p>
+  <p th:text="'Task name: ' + ${task.name}"></p>
+  <div th:if="${claimable == true}">
+    <form action="#" th:action="@{__${#httpServletRequest.requestURI}__/claimTask}" method="post">
+      <button type="submit" class="btn btn-primary btn-block">Claim Task</button>
+    </form>
+  </div>
+  <div th:if="${claimable == null}">
+    <p th:text="'Assigned to: ' + ${assigned.firstName} + ' ' + ${assigned.lastName}"></p>
+  </div>
   <p th:text="'Deadline: ' + ${deadline}"></p>
   <p th:text="'Status: ' + ${task.status}"></p>
-  <form action="#" th:action="@{__${#httpServletRequest.requestURI}__/editDescription}" th:object="${comment}" method="post">
-    <input type="text" th:field="*{text}" placeholder="Description" class="form-control" />
-    <button type="submit" class="btn btn-primary btn-block">Change Description</button>
-  </form>
-  <form action="#" th:action="@{__${#httpServletRequest.requestURI}__/editStatus}" th:object="${comment}" method="post">
-    <input type="text" th:field="*{text}" placeholder="New Status" class="form-control" />
-    <button type="submit" class="btn btn-primary btn-block">Change Status</button>
-  </form>
   <table>
     <thead>
       <tr>
-        <th>ID</th>
         <th>User</th>
         <th>Comment</th>
       </tr>
     </thead>
     <tbody>
       <tr th:each="comment : ${comments}">
-        <td><span th:text="${comment.id}">Name</span></td>
         <td><span th:text="${comment.userName}">Name</span></td>
         <td><span th:text="${comment.text}">Name</span></td>
       </tr>
@@ -40,6 +37,16 @@
     <input type="text" th:field="*{text}" placeholder="Comment" class="form-control" />
     <button type="submit" class="btn btn-primary btn-block">Submit</button>
   </form>
+  <div>
+  <form action="#" th:action="@{__${#httpServletRequest.requestURI}__/editDescription}" th:object="${comment}" method="post">
+    <input type="text" th:field="*{text}" placeholder="Description" class="form-control" />
+    <button type="submit" class="btn btn-primary btn-block">Change Description</button>
+  </form>
+  <form action="#" th:action="@{__${#httpServletRequest.requestURI}__/editStatus}" th:object="${comment}" method="post">
+    <input type="text" th:field="*{text}" placeholder="New Status" class="form-control" />
+    <button type="submit" class="btn btn-primary btn-block">Change Status</button>
+  </form>
+  </div>
   <div th:object="${project}" >
     <form action="#" th:action="@{/{projectId}(projectId=${project.id})}">
       <input type="submit" value="Go back"/>

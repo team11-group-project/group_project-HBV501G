@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-  <title layout:title-pattern="$CONTENT_TITLE">Demo</title>
+  <title layout:title-pattern="$CONTENT_TITLE">All in One</title>
   <script>
     let page = "layout"
   </script>
 </head>
 <body>
-<header>
-  <h1>Welcome <span sec:authentication="name">Username</span></h1>
+<header th:object="${user}">
+  <h1>Welcome <span th:text="${user.firstName}" >Username</span></h1>
 </header>
 <section data-layout-fragment="content">
-
-  <div sec:authorize="isAuthenticated()">
-    Authenticated as <span sec:authentication="name"></span></div>
 
   <form action="#" th:action="@{/addProject}">
     <input type="submit" value="Add project"/>
@@ -22,7 +19,12 @@
   <table>
     <thead>
       <tr>
-        <th>Name</th>
+        <div th:if="${!projects.isEmpty()}">
+          <th>Projects</th>
+        </div>
+        <div th:if="${projects.isEmpty()}">
+          <p th:text="'The projects you create will appear here'"></p>
+        </div>
       </tr>
     </thead>
     <tbody>
