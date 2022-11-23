@@ -2,6 +2,7 @@ package is.hi.hbv501g.group_project.project;
 
 import is.hi.hbv501g.group_project.appuser.AppUser;
 import is.hi.hbv501g.group_project.appuser.AppUserRepository;
+import is.hi.hbv501g.group_project.appuser.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class ProjectMembersService {
 
     private final ProjectMembersRepository projectMembersRepository;
-    private final AppUserRepository appUserRepository;
+    private final AppUserService appUserService;
 
     /***
      * Adds a user as a member to the project.
@@ -30,7 +31,7 @@ public class ProjectMembersService {
         List <AppUser> members = new ArrayList<>();
         List <ProjectMembers> projectMembers = projectMembersRepository.findByProjectId(projectId);
         for (ProjectMembers member : projectMembers) {
-            members.add(appUserRepository.findById(member.getUserId()).get());
+            members.add(appUserService.findById(member.getUserId()));
         }
         return members;
     }

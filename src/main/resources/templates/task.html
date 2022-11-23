@@ -9,6 +9,7 @@
 <body>
 <section data-layout-fragment="content">
   <p th:text="'Task name: ' + ${task.name}"></p>
+
   <div th:if="${claimable == true}">
     <form action="#" th:action="@{__${#httpServletRequest.requestURI}__/claimTask}" method="post">
       <button type="submit" class="btn btn-primary btn-block">Claim Task</button>
@@ -17,8 +18,12 @@
   <div th:if="${claimable == null}">
     <p th:text="'Assigned to: ' + ${assigned.firstName} + ' ' + ${assigned.lastName}"></p>
   </div>
+
+
   <p th:text="'Deadline: ' + ${deadline}"></p>
   <p th:text="'Status: ' + ${task.status}"></p>
+
+
   <table>
     <thead>
       <tr>

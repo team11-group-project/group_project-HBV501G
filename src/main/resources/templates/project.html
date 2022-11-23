@@ -11,7 +11,9 @@
   <h1><span th:text="${project.name}" >Username</span></h1>
 </header>
 <section data-layout-fragment="content">
-  <p th:text="'Project description: ' + ${project.description}"></p>
+  <div th:if="${!project.description.isEmpty()}">
+    <p th:text="'Project description: ' + ${project.description}"></p>
+  </div>
   <table>
     <thead>
     <tr>

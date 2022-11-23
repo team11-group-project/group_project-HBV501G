@@ -47,6 +47,7 @@ public class TaskController {
             modelAndView.addObject("task", task);
             modelAndView.addObject("deadline", df.format(task.getDeadline()));
             System.out.println(task.getOwnerUserId());
+
             if (task.getOwnerUserId() == null){
                 modelAndView.addObject("claimable", true);
             }
@@ -54,6 +55,8 @@ public class TaskController {
                 AppUser assigned = appUserService.findById(task.getOwnerUserId());
                 modelAndView.addObject("assigned", assigned);
             }
+
+
             modelAndView.addObject("project", projectService.findByProjectId(projectId));
             modelAndView.addObject("comments", taskService.findCommentByTaskId(taskId));
             modelAndView.addObject("comment", new Comment());
