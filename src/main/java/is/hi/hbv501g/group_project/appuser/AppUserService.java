@@ -7,6 +7,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /***
  * This class implements a service for the app users. The service adds tasks to the repository of tasks.
  */
@@ -58,5 +61,13 @@ public class AppUserService implements UserDetailsService {
      */
     public AppUser findById(long id){
         return appUserRepository.findById(id).get();
+    }
+
+    public List <String> getEmailsByUser(List <AppUser> users){
+        List <String> emails = new ArrayList<String>();
+        for (AppUser user : users){
+            emails.add(user.getEmail());
+        }
+        return emails;
     }
 }

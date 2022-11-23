@@ -133,7 +133,7 @@ public class TaskController {
         else if (request.getStatus().equals("")) {
             modelAndView.addObject("successMessage", "Please indicate a status for your task");
         }
-        else if (request.getDeadline().isEmpty()){
+        else if (request.getDeadline().isEmpty()) {
             modelAndView.addObject("successMessage", "Please enter a deadline");
         }
         else if(bindingResult.hasErrors()){

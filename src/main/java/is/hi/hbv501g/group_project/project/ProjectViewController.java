@@ -3,6 +3,7 @@ package is.hi.hbv501g.group_project.project;
 import is.hi.hbv501g.group_project.appuser.AppUser;
 import is.hi.hbv501g.group_project.appuser.AppUserEmail;
 import is.hi.hbv501g.group_project.appuser.AppUserRepository;
+import is.hi.hbv501g.group_project.appuser.AppUserService;
 import is.hi.hbv501g.group_project.security.config.CustomPermissionEvaluatorService;
 import is.hi.hbv501g.group_project.task.TaskService;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,7 @@ public class ProjectViewController {
     private final ProjectMembersService projectMembersService;
     private final TaskService taskService;
     private final CustomPermissionEvaluatorService customPermissionEvaluatorService;
+    private final AppUserService userService;
 
     /***
      * Model and View to display projects by ID.
@@ -90,14 +92,15 @@ public class ProjectViewController {
         modelAndView.addObject("project", projectService.findByProjectId(projectId));
         AppUser user = (AppUser) authentication.getPrincipal();
         List <AppUser> users = projectMembersService.findMembersByProjectId(projectId);
+        List <String> emails = userService.getEmailsByUser(users);
         if(request.getEmail().equals("")){
             modelAndView.addObject("successMessage", "Please enter the email of the user you wish to add" + request.getEmail());
         }
         else if (!userExists) {
             modelAndView.addObject("successMessage", "No user with email: " + request.getEmail());
         }
-        else if(request.getEmail() == user.getEmail()){
-            modelAndView.addObject("successMessage", "You already have access to this project");
+        else if(emails.contains(request.getEmail())){
+            modelAndView.addObject("successMessage", "User " + request.getEmail() + " already has access to this project");
         }
         else if(bindingResult.hasErrors()){
             modelAndView.addObject("successMessage", "Please add correct details!");
